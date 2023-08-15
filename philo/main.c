@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 int	ft_atoi(const char *str)
 {
 	int	c;
@@ -26,6 +28,9 @@ int	ft_atoi(const char *str)
 
 int main(int argc, char **argv)
 {
+    int n_meals;
+
+    n_meals = 0;
     if (argc < 5 || argc > 6)
         return (printf("error na quantidade de argumentos"));
     if (ft_atoi(argv[1]) < 1)
@@ -36,6 +41,12 @@ int main(int argc, char **argv)
         return (printf("Tempo para comer invalido"));
     if (ft_atoi(argv[4]) < 1)
         return (printf("Tempo para dormir invalido"));
-    if (argc != 6)
+    if (argc == 6)
+        n_meals = ft_atoi(argv[5]);
+    
+	printf("Numero de filosofos: %dms\n", ft_atoi(argv[1]));
+	printf("Tempo ate morrer: %dms\n", ft_atoi(argv[2]));
+	printf("Tempo para a refeicao: %dms\n", ft_atoi(argv[3]));
+	printf("Tempo para dormir: %dms\n", ft_atoi(argv[4]));
     return (0);
 }
