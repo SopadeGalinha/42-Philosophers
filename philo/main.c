@@ -26,27 +26,66 @@ int	ft_atoi(const char *str)
 	return (res * s);
 }
 
+typedef struct s_params
+{
+	int	n_philo;
+	int	n_time_to_die;
+	int	n_time_to_eat;
+	int	n_time_to_sleep;
+	int	n_meals;
+}	t_params;
+
+void	set_params(t_params *input, int argc, char **argv)
+{
+	if (argc == 5 || argc == 6)
+	{
+		input->n_philo = ft_atoi(argv[1]);
+		input->n_time_to_die = ft_atoi(argv[2]);
+		input->n_time_to_eat = ft_atoi(argv[3]);
+		input->n_time_to_sleep = ft_atoi(argv[4]);
+		if (argc == 6)
+			input->n_meals = ft_atoi(argv[5]);
+		else
+			input->n_meals = -1;
+	}
+}
+
+int	check_params(t_params *input, int argc, char **argv)
+{
+	if (argc < 5 || argc > 6)
+        return (printf("Input: ./philo <number_of_philos> <time_to_die <time_to_eat> <time_to_sleep> [eat_number_times]\n"));
+    if (input->n_philo < 1)
+        return (printf("Quantidade de filosofos invalida\n"));
+    if (input->n_time_to_die < 1)
+        return (printf("Tempo de vida invalido\n"));
+    if (input->n_time_to_eat < 1)
+        return (printf("Tempo para comer invalido\n"));
+    if (input->n_time_to_sleep < 1)
+        return (printf("Tempo para dormir invalido\n"));
+	return (0);
+}
+
+void	ft_print_params(t_params *input, int argc)
+{
+	printf("Número de filósofos: %d\n", input->n_philo);
+    printf("Tempo para morrer: %d\n", input->n_time_to_die);
+    printf("Tempo para comer: %d\n", input->n_time_to_eat);
+    printf("Tempo para dormir: %d\n", input->n_time_to_sleep);
+	if(argc == 6)
+		printf("Quantide de refeicoes: %d\n", input->n_meals);
+	else
+		printf("Sem quantidade de refeicoes definida: %d\n", input->n_meals);
+}
+
 int main(int argc, char **argv)
 {
-    int n_meals;
+	t_params	input;
 
-    n_meals = 0;
-    if (argc < 5 || argc > 6)
-        return (printf("error na quantidade de argumentos"));
-    if (ft_atoi(argv[1]) < 1)
-        return (printf("Quantidade de filosofo invalida"));
-    if (ft_atoi(argv[2]) < 1)
-        return (printf("Tempo de vida invalido"));
-    if (ft_atoi(argv[3]) < 1)
-        return (printf("Tempo para comer invalido"));
-    if (ft_atoi(argv[4]) < 1)
-        return (printf("Tempo para dormir invalido"));
-    if (argc == 6)
-        n_meals = ft_atoi(argv[5]);
-    
-	printf("Numero de filosofos: %dms\n", ft_atoi(argv[1]));
-	printf("Tempo ate morrer: %dms\n", ft_atoi(argv[2]));
-	printf("Tempo para a refeicao: %dms\n", ft_atoi(argv[3]));
-	printf("Tempo para dormir: %dms\n", ft_atoi(argv[4]));
+	input = (t_params){0};	
+	set_params(&input, argc, argv);
+	check_params(&input, argc, argv);
+	ft_print_params(&input, argc);
+
     return (0);
 }
+//cc main.c -o philo
