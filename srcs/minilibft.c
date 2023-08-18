@@ -5,32 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 22:46:03 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/07/21 22:46:03 by jhogonca         ###   ########.fr       */
+/*   Created: 2023/08/18 11:27:55 by jhogonca          #+#    #+#             */
+/*   Updated: 2023/08/18 11:27:55 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../philo.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_atoi(const char *str)
 {
-    size_t	len;
+	int	c;
+	int	s;
+	int	res;
 
-    len = 0;
-    while (*str++)
-        len++;
-    return (len);
+	c = 0;
+	s = 1;
+	res = 0;
+	while (str[c] == ' ' || str[c] == '\n' || str[c] == '\t'
+		|| str[c] == '\v' || str[c] == '\f' || str[c] == '\r')
+		c++;
+	if (str[c] == '-' || str[c] == '+')
+	{
+		if (str[c] == '-')
+			s = -1;
+		c++;
+	}
+	while (str[c] >= '0' && str[c] <= '9')
+	{
+		res = (res * 10) + (str[c] - 48);
+		c++;
+	}
+	return (res * s);
 }
 
-void	ft_putstr(char *str)
+int	ft_strlen(const char *str)
 {
-	write(1, str, ft_strlen(str));
-}
+	int	len;
 
-void	ft_putnbr(long n)
-{
-	if (n > 9)
-		ft_putnbr(n / 10);
-	write(1, &"0123456789"[n % 10], 1);
+	len = -1;
+	while (str[++len])
+		;
+	return (len);
 }
-
