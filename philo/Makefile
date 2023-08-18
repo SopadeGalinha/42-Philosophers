@@ -1,20 +1,34 @@
-SRCS			= main.c \
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
+#    Updated: 2023/08/18 12:52:07 by jhogonca         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJS			= $(SRCS:.c=.o)
-CC				= cc
-CFLAGS			= -Wall -Wextra -Werror
-LIBCR			= ar rc
-RM				= rm -f
+NAME 	= philo
+SRCS 	= srcs/main.c srcs/minilibft.c srcs/initialization.c
 
-NAME			= philo
+CC		= cc
+CFLAGS	= -Wall -Wextra -Werror -g -L.
+RM 		= rm -f
 
-all:			$(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME):
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+
+re:		fclean all
+
 clean:
-			$(RM) $(OBJS)
-fclean:		clean
-			$(RM) $(NAME)
+	$(RM) $(OBJS)
 
-re:			fclean all
+fclean:	clean
+	$(RM) $(NAME)
+
+norm:
+	norminette *.h $(SRCS)

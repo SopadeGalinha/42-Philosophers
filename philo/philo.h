@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/17 20:24:50 by heolivei         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:40:52 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <stdbool.h>
 
 typedef struct s_params
 {
@@ -24,5 +25,8 @@ typedef struct s_params
 	int	n_meals;
 }	t_params;
 
-int	check_params(t_params *input, int argc);
+int		ft_strlen(const char *str);
+int		ft_atoi(const char *str);
+bool	initialization(t_params *input, int argc, char **argv);
+
 #endif
