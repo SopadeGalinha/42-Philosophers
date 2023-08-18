@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/18 12:52:07 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/18 12:57:25 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ $(NAME):
 re:		fclean all
 
 clean:
-	$(RM) $(OBJS)
+	$(RM)
 
 fclean:	clean
 	$(RM) $(NAME)
