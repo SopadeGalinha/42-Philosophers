@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/23 10:25:39 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:24:01 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@
 # define ERROR_INV_TTDIE	"Error: Time to die must be greater than 0"
 # define ERROR_INV_TTEAT	"Error: Time to eat must be greater than 0"
 # define ERROR_INV_TTSLEEP	"Error: Time to sleep must be greater than 0"
+# define ERROR_INV_NMEALS	"Error: Number of meals must be greater than 0"
 # define ERROR_ARG_NUM		"Philo Error: invalid number of arguments\n"\
 							"Try: ./philo <number_of_philos> <time_to_die> "\
 							"<time_to_eat> <time_to_sleep> "\
 							"\n[number_of_times_each_philosopher_must_eat] (optional)\n"
 
-//
+// actions 
 enum actions{
 	EAT,
 	SLEEP,

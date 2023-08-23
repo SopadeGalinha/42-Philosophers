@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/23 09:50:54 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/23 11:39:17 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,3 +35,9 @@ fclean:	clean
 
 norm:
 	norminette *.h $(SRCS)
+
+# SRCS_LIST 	=	srcs/main.c \
+# 			 	srcs/init_table.c\
+# 				srcs/check_args.c\
+# 				srcs/minilibft.c\
+# 				 srcs/init_table_utils.c
