@@ -6,15 +6,18 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/18 12:57:25 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/23 09:50:54 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.SILENT:
+
 NAME 	= philo
-SRCS 	= srcs/main.c srcs/minilibft.c srcs/initialization.c
+
+SRCS 	= srcs/main.c srcs/init_table.c srcs/check_args.c srcs/minilibft.c srcs/init_table_utils.c
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g -L.
+CFLAGS	= -Wall -Wextra -Werror -g -L. -lpthread
 RM 		= rm -f
 
 all: $(NAME)
