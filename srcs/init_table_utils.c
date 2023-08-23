@@ -44,8 +44,9 @@ static void set_philo_env(int i, t_philo *philo, t_table *table)
 
 static void	set_fts(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-		printf("0\n");
+	if (philo->id % 2 == 0){
+		;
+	}
 	// philo->ft[0] = ft_eat;
 	// philo->ft[1] = ft_sleep;
 	// philo->ft[2] = ft_think;

@@ -28,6 +28,8 @@ int	check_args(int ac, char **av)
 		return (printf("%s\n", ERROR_INV_TTEAT));
 	if (ft_atoi(av[4]) < 1)
 		return (printf("%s\n", ERROR_INV_TTSLEEP));
+	if (ac == 6 && ft_atoi(av[5]) < 1)
+		return (printf("%s\n", ERROR_INV_NPHILO));
 	return (0);
 }
 

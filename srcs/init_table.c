@@ -28,7 +28,7 @@ t_table	*init_table(int ac, char **av)
 		return (NULL);
 	table->start_time.tv_sec = get_time(table);
 	get_args(ac, av, table);
-	if (get_forks(table) || get_philos(table)) 
+	if (get_forks(table) || get_philos(table))
 		return (NULL);
 	return (table);
 }

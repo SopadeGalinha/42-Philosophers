@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:18:34 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/23 09:53:38 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/23 11:03:03 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,4 @@ int	main(int ac, char **av)
 	table = init_table(ac, av);
 	if (!table)
 		return (printf("Error: table initialization failed\n"));
-	printf("table seted\n");
 }
