@@ -12,7 +12,7 @@
 
 #include "../philo.h"
 
-static void	get_args(int argc, char **argv, t_table *table);
+static void	get_args(int ac, char **av, t_table *table);
 static int	get_forks(t_table *table);
 static int	get_philos(t_table *table);
 
@@ -22,26 +22,30 @@ t_table	*init_table(int ac, char **av)
 
 	if (check_args(ac, av))
 		return (NULL);
-	table = NULL;
  	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
-	table->start_time.tv_sec = get_time(table);
 	get_args(ac, av, table);
+	table->is_over = false;
+	if (table->args.nb_philo == 1)
+		table->is_over = true;
+	pthread_mutex_init(&table->printzone, NULL);
+	pthread_mutex_init(&table->is_over_lock, NULL);
+	table->start_time.tv_sec = get_time(table);
 	if (get_forks(table) || get_philos(table))
 		return (NULL);
 	return (table);
 }
- 
-static void	get_args(int argc, char **argv, t_table *table)
+
+static void	get_args(int ac, char **av, t_table *table)
 {
-	table->args.nb_philo = ft_atoi(argv[1]);
-	table->args.time_die = ft_atoi(argv[2]);
-	table->args.time_eat = ft_atoi(argv[3]);
-	table->args.time_sleep = ft_atoi(argv[4]);
+	table->args.nb_philo = ft_atoi(av[1]);
+	table->args.time_die = ft_atoi(av[2]);
+	table->args.time_eat = ft_atoi(av[3]);
+	table->args.time_sleep = ft_atoi(av[4]);
 	table->args.nb_meals = -1;
-	if (argc == 6)
-		table->args.nb_meals = ft_atoi(argv[5]);
+	if (ac == 6)
+		table->args.nb_meals = ft_atoi(av[5]);
 }
 
 static int	get_forks(t_table *table)
@@ -69,4 +73,12 @@ static int	get_philos(t_table *table)
 		if (create_philo(i, table))
 			return (1);
 	return (0);
+}
+
+int	get_time(t_table *table)
+{
+	struct timeval	time;
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000)\
+		+ (time.tv_usec / 1000) - (table->start_time.tv_sec));
 }

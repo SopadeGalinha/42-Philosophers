@@ -6,15 +6,20 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/23 11:39:17 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/24 11:06:09 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
-NAME 	= philo
+NAME 	=	philo
 
-SRCS 	= srcs/main.c srcs/init_table.c srcs/check_args.c srcs/minilibft.c srcs/init_table_utils.c
+SRCS 	=	srcs/main.c \
+			srcs/init_table.c \
+			srcs/check_args.c \
+			srcs/minilibft.c \
+			srcs/init_table_utils.c \
+			srcs/log_messages.c
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g -L. -lpthread
