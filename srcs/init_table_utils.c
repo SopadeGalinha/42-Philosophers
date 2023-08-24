@@ -13,7 +13,6 @@
 #include "../philo.h"
 
 static void set_philo_env(int i, t_philo *philo, t_table *table);
-void    ft_think(t_philo *philo, t_table *table);
 
 int	create_philo(int i, t_table *table)
 {
@@ -49,6 +48,7 @@ static void set_philo_env(int i, t_philo *philo, t_table *table)
 	philo->is_over_lock = &table->is_over_lock;
 }
 
+// Actions
 void	ft_think(t_philo *philo, t_table *table)
 {
 	log_message(philo, table, "is thinking", ESC_BOLD_MAGENTA);
@@ -56,7 +56,7 @@ void	ft_think(t_philo *philo, t_table *table)
 
 void	ft_sleep(t_philo *philo, t_table *table)
 {
-	log_message(philo, table, "is sleeping", ESC_BOLD_BLUE);
+	log_message(philo, table, "is sleeping", ESC_BOLD_CYAN);
 	usleep(table->args.time_sleep);
 }
 
