@@ -25,15 +25,16 @@ t_table	*init_table(int ac, char **av)
 	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
+	table->start_time.tv_sec = 0;
+	pthread_mutex_init(&table->printzone, NULL);
+	pthread_mutex_init(&table->is_over_lock, NULL);
 	get_args(ac, av, table);
+	table->start_time.tv_sec = get_time(table);
+	if (get_forks(table) || get_philos(table))
+		return (NULL);
 	table->is_over = false;
 	if (table->args.nb_philo == 1)
 		table->is_over = true;
-	pthread_mutex_init(&table->printzone, NULL);
-	pthread_mutex_init(&table->is_over_lock, NULL);
-	get_time(table);
-	if (get_forks(table) || get_philos(table))
-		return (NULL);
 	return (table);
 }
 
@@ -77,11 +78,8 @@ static int	get_philos(t_table *table)
 
 int	get_time(t_table *table)
 {
-	struct timeval		time;
-	int					res;
-
+	struct timeval	time;
 	gettimeofday(&time, NULL);
-	res = ((time.tv_sec * 1000) + time.tv_usec) \
-		/ (1000 - table->start_time.tv_sec);
-	return (res);
+	return ((time.tv_sec * 1000)\
+		+ (time.tv_usec / 1000) - (table->start_time.tv_sec));
 }

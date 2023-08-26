@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/26 10:30:36 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/26 18:04:32 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,14 @@
 # include <stdlib.h>
 
 // Colors 
+# define ESC_RESET			"\001\033[0m\002"
 # define ESC_BOLD_RED		"\001\033[1;31m\002"
 # define ESC_BOLD_GREEN		"\001\033[1;32m\002"
-# define ESC_BOLD_YELLOW	"\001\033[1;33m\002"
-# define ESC_BOLD_MAGENTA	"\001\033[1;35m\002"
-# define ESC_BOLD_BLUE		"\001\033[1;34m\002"
+# define ESC_BOLD_ORANGE	"\001\033[1;33m\002"
 # define ESC_BOLD_PURPLE	"\001\033[1;35m\002"
 # define ESC_BOLD_CYAN		"\001\033[1;36m\002"
 # define ESC_BOLD_WHITE		"\001\033[1;37m\002"
-# define ESC_WHITE			"\001\033[0;37m\002"
+# define ESC_BOLD_GREY		"\001\033[1;39m\002"
 
 // Error Messages
 # define ERROR_ARG_TYPE		"Error: arguments must be numbers"
@@ -48,6 +47,11 @@ enum e_actions{
 	EAT,
 	SLEEP,
 	THINK
+};
+
+enum e_fork{
+	LEFT,
+	RIGHT
 };
 
 typedef struct s_table	t_table;
@@ -79,6 +83,7 @@ typedef struct s_philo
 	pthread_mutex_t	*print_zone;
 	bool			*is_over;
 	pthread_mutex_t	*is_over_lock;
+	t_table			*table;
 }	t_philo;
 
 // Struct to store all data to table settings
@@ -91,6 +96,7 @@ typedef struct s_table
 	bool			is_over;
 	pthread_mutex_t	printzone;
 	pthread_mutex_t	is_over_lock;
+	pthread_t		reaper;
 }	t_table;
 
 int		ft_atoi(const char *str);
@@ -98,10 +104,10 @@ int		get_time(t_table *table);
 int		check_args(int ac, char **av);
 t_table	*init_table(int argc, char **argv);
 int		create_philo(int i, t_table *table);
+int		start_dinner(t_table *table);
 void	log_message(t_philo *philo, t_table *table, char *log_msg, char *color);
 void	ft_think(t_philo *philo, t_table *table);
 void	ft_sleep(t_philo *philo, t_table *table);
 void	ft_eat(t_philo *philo, t_table *table);
-int		start_dinner(t_table *table);
 
 #endif

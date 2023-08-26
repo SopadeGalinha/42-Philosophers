@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:18:34 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/26 10:41:47 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:54:25 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static void	clean_table(t_table *table)
 {
 	int	i;
 
-	i = -1;
+	printf(ESC_RESET);
 	if (!table)
 		return ;
+	i = -1;
 	pthread_mutex_destroy(&table->is_over_lock);
 	pthread_mutex_destroy(&table->printzone);
 	if (table->forks)
@@ -41,6 +42,7 @@ int	main(int ac, char **av)
 	t_table	*table;
 
 	table = init_table(ac, av);
+	printf("\n");
 	if (table)
 		start_dinner(table);
 	clean_table(table);
