@@ -17,7 +17,7 @@ static bool	ft_is_all_num(char **av);
 int	check_args(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
-		return (printf("%s\n", ERROR_ARG_NUM));
+		return (printf("%s%s%s%s\n", ER1, ER2, ER3, ER4));
 	if (!ft_is_all_num(av))
 		return (printf("%s\n", ERROR_ARG_TYPE));
 	if (ft_atoi(av[1]) < 1)
@@ -49,7 +49,7 @@ static bool	ft_isdigit(char *str)
 static bool	ft_is_all_num(char **av)
 {
 	int	i;
-	
+
 	i = 0;
 	while (av[++i])
 		if (!ft_isdigit(av[i]))
