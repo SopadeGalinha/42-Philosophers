@@ -12,7 +12,7 @@
 
 #include "../philo.h"
 
-static void set_philo_env(int i, t_philo *philo, t_table *table);
+static void	set_philo_env(int i, t_philo *philo, t_table *table);
 
 int	create_philo(int i, t_table *table)
 {
@@ -30,11 +30,11 @@ int	create_philo(int i, t_table *table)
 	table->philos[i]->ft[SLEEP] = ft_sleep;
 	table->philos[i]->ft[THINK] = ft_think;
 	table->philos[i]->last_meal = get_time(table);
-	log_message(table->philos[i], table, "has joined the table", ESC_BOLD_WHITE);
+	log_message(table->philos[i], table, "joined the table", ESC_BOLD_WHITE);
 	return (0);
 }
 
-static void set_philo_env(int i, t_philo *philo, t_table *table)
+static void	set_philo_env(int i, t_philo *philo, t_table *table)
 {
 	philo->args.nb_philo = table->args.nb_philo;
 	philo->args.time_die = table->args.time_die;

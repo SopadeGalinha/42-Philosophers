@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/26 09:34:22 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/26 10:30:36 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,27 @@
 # define ESC_BOLD_WHITE		"\001\033[1;37m\002"
 # define ESC_WHITE			"\001\033[0;37m\002"
 
-
 // Error Messages
-# define ERROR_ARG_TYPE		"Philo Error: arguments must be numeric"
-# define ERROR_INV_NPHILO	"Error: Number of philosophers must be greater than 0"
+# define ERROR_ARG_TYPE		"Error: arguments must be numbers"
+# define ERROR_INV_NPHILO	"Error: invalid number of philosophers"
 # define ERROR_INV_TTDIE	"Error: Time to die must be greater than 0"
 # define ERROR_INV_TTEAT	"Error: Time to eat must be greater than 0"
 # define ERROR_INV_TTSLEEP	"Error: Time to sleep must be greater than 0"
 # define ERROR_INV_NMEALS	"Error: Number of meals must be greater than 0"
-# define ERROR_ARG_NUM		"Philo Error: invalid number of arguments\n"\
-							"Try: ./philo <number_of_philos> <time_to_die> "\
-							"<time_to_eat> <time_to_sleep> "\
-							"\n[number_of_times_each_philosopher_must_eat] (optional)\n"
+# define ER1				"Error: invalid number of arguments\n"
+# define ER2				"Try: ./philo <number_of_philos> <time_to_die> "
+# define ER3				"<time_to_eat> <time_to_sleep> "
+# define ER4				"[number_of_times_each_philosopher_must_eat]\n"
 
 // actions 
-enum actions{
+enum e_actions{
 	EAT,
 	SLEEP,
 	THINK
 };
 
-typedef struct s_table t_table;
-typedef struct s_philo t_philo; 
+typedef struct s_table	t_table;
+typedef struct s_philo	t_philo;
 
 // Struct to populate with arguments passed by user 
 typedef struct s_args
@@ -72,7 +71,7 @@ typedef struct s_philo
 	pthread_t		thread_id;
 	pthread_mutex_t	*fork[2];
 	t_args			args;
-	void            (*ft[3])(struct s_philo *philo, t_table *table);
+	void			(*ft[3])(struct s_philo *philo, t_table *table);
 	long			last_meal;
 	pthread_mutex_t	last_meal_lock;
 	bool			is_done;
@@ -94,16 +93,15 @@ typedef struct s_table
 	pthread_mutex_t	is_over_lock;
 }	t_table;
 
-
 int		ft_atoi(const char *str);
 int		get_time(t_table *table);
 int		check_args(int ac, char **av);
 t_table	*init_table(int argc, char **argv);
 int		create_philo(int i, t_table *table);
-void    log_message(t_philo *philo, t_table *table, char *log_msg, char *color);
+void	log_message(t_philo *philo, t_table *table, char *log_msg, char *color);
 void	ft_think(t_philo *philo, t_table *table);
 void	ft_sleep(t_philo *philo, t_table *table);
 void	ft_eat(t_philo *philo, t_table *table);
-int	start_dinner(t_table *table);
+int		start_dinner(t_table *table);
 
 #endif

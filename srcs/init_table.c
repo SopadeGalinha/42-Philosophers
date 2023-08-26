@@ -22,7 +22,7 @@ t_table	*init_table(int ac, char **av)
 
 	if (check_args(ac, av))
 		return (NULL);
- 	table = malloc(sizeof(t_table));
+	table = malloc(sizeof(t_table));
 	if (!table)
 		return (NULL);
 	get_args(ac, av, table);
@@ -78,9 +78,10 @@ static int	get_philos(t_table *table)
 int	get_time(t_table *table)
 {
 	struct timeval		time;
-	int				res;
+	int					res;
 
 	gettimeofday(&time, NULL);
-	res = ((time.tv_sec * 1000) + time.tv_usec) / (1000 - table->start_time.tv_sec);
+	res = ((time.tv_sec * 1000) + time.tv_usec) \
+		/ (1000 - table->start_time.tv_sec);
 	return (res);
 }

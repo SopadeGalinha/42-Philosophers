@@ -14,10 +14,10 @@
 
 void	log_message(t_philo *philo, t_table *table, char *log_msg, char *color)
 {
-	long	ms_since_start;
+	long	since_start;
 
 	pthread_mutex_lock(&table->printzone);
-	ms_since_start = get_time(table);
-	printf("%s%ld %d %s%s\n", color, ms_since_start, philo->id, log_msg, ESC_WHITE);
+	since_start = get_time(table);
+	printf("%s%ld %d %s%s\n", color, since_start, philo->id, log_msg, ESC_WHITE);
 	pthread_mutex_unlock(&table->printzone);
 }
