@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/24 13:57:47 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/26 09:47:21 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,15 @@ NAME	 	=	philo
 
 SRCS_LST	=	srcs/main.c srcs/init_table.c \
 				srcs/check_args.c srcs/minilibft.c \
-				srcs/init_table_utils.c srcs/log_messages.c
+				srcs/init_table_utils.c srcs/log_messages.c srcs/start_dinner.c
 				
 OBJS_LST	=	$(SRCS_LST:.c=.o)
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -L. -lpthread -fsanitize=address
 RM 			= rm -f
+
+CFLAGS		= -Wall -Wextra -Werror -g -L. -lpthread -fsanitize=address
+# CFLAGS		=  -g -L. -lpthread -fsanitize=address
 
 all:		$(NAME)
 	@echo "\033[32m[ ✔ ] $(NAME) ready\033[0m"

@@ -31,7 +31,7 @@ t_table	*init_table(int ac, char **av)
 		table->is_over = true;
 	pthread_mutex_init(&table->printzone, NULL);
 	pthread_mutex_init(&table->is_over_lock, NULL);
-	table->start_time.tv_sec = get_time(table);
+	get_time(table);
 	if (get_forks(table) || get_philos(table))
 		return (NULL);
 	return (table);
@@ -77,8 +77,10 @@ static int	get_philos(t_table *table)
 
 int	get_time(t_table *table)
 {
-	struct timeval	time;
+	struct timeval		time;
+	int				res;
+
 	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000)\
-		+ (time.tv_usec / 1000) - (table->start_time.tv_sec));
+	res = ((time.tv_sec * 1000) + time.tv_usec) / (1000 - table->start_time.tv_sec);
+	return (res);
 }
