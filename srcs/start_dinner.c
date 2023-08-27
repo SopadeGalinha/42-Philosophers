@@ -77,27 +77,20 @@ static bool	is_meal_over(t_philo *philo)
 
 void *dine(void *philo_ptr)
 {
-	t_philo *philo;
-	unsigned int i;
-	
+	t_philo	*philo;
+
 	philo = (t_philo *)philo_ptr;
-	if (philo->id % 2 == 0)
-		usleep(1000);
-	if (philo->args.nb_philo == 1)
-	{
-		pthread_mutex_lock(philo->fork[0]);
-		log_message(philo, philo->table, "has taken a fork", ESC_BOLD_ORANGE);
-		log_message(philo, philo->table, "can't eat alone", ESC_BOLD_GREY);
-		pthread_mutex_unlock(philo->fork[0]);
-		return (NULL);
-	}
-	i = 0;
 	while (!is_meal_over(philo))
 	{
 		philo->ft[EAT](philo, philo->table);
+		if (is_meal_over(philo))
+			break ;
 		philo->ft[SLEEP](philo, philo->table);
+		if (is_meal_over(philo))
+			break ;
 		philo->ft[THINK](philo, philo->table);
 	}
+	return (NULL);
 }
 
 void	*reaper(void *table_ptr)
