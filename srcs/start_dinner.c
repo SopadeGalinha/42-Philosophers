@@ -30,11 +30,10 @@ static bool	all_done(t_table *table)
 	return (true);
 }
 
-bool	any_dead(t_table *table)
+static bool	any_dead(t_table *table)
 {
-	int	i;
+	int		i;
 	long	time_now;
-	bool	is_over;
 
 	i = -1;
 	time_now = get_time(table);
@@ -42,7 +41,6 @@ bool	any_dead(t_table *table)
 	{
 		pthread_mutex_lock(&table->philos[i]->last_meal_lock);
 		pthread_mutex_lock(&table->philos[i]->is_done_lock);
-		is_over = table->philos[i]->is_done;
 		pthread_mutex_unlock(&table->philos[i]->is_done_lock);
 		pthread_mutex_unlock(&table->philos[i]->last_meal_lock);
 		if (time_now - table->philos[i]->last_meal > table->args.time_die)
@@ -50,57 +48,42 @@ bool	any_dead(t_table *table)
 			pthread_mutex_lock(&table->is_over_lock);
 			table->is_over = true;
 			pthread_mutex_unlock(&table->is_over_lock);
-			log_message(table->philos[i], table, "dead", ESC_BOLD_RED);
+			log_message(table->philos[i], table, "died", ESC_BOLD_RED);
 			return (true);
 		}
 	}
 	return (false);
 }
 
-static bool	is_meal_over(t_philo *philo)
+static void	*dine(void *philo_ptr)
 {
-	bool	is_over;
-	bool	is_done;
+	t_philo	*philo;
 
-	pthread_mutex_lock(philo->is_over_lock);
-	is_over = *philo->is_over;
-	pthread_mutex_unlock(philo->is_over_lock);
-	if (is_over)
-		return (true);
-	pthread_mutex_lock(&philo->is_done_lock);
-	is_done = philo->is_done;
-	pthread_mutex_unlock(&philo->is_done_lock);
-	if (is_done)
-		return (true);
-	return (false);
-}
-
-void *dine(void *philo_ptr)
-{
-	t_philo *philo;
-	unsigned int i;
-	
 	philo = (t_philo *)philo_ptr;
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	if (philo->args.nb_philo == 1)
 	{
-		pthread_mutex_lock(philo->fork[0]);
+		pthread_mutex_lock(philo->fork[RIGHT]);
 		log_message(philo, philo->table, "has taken a fork", ESC_BOLD_ORANGE);
-		log_message(philo, philo->table, "can't eat alone", ESC_BOLD_GREY);
-		pthread_mutex_unlock(philo->fork[0]);
+		pthread_mutex_unlock(philo->fork[RIGHT]);
+		log_message(philo, philo->table, "can't eat alone", ESC_BOLD_RED);
 		return (NULL);
 	}
-	i = 0;
 	while (!is_meal_over(philo))
 	{
 		philo->ft[EAT](philo, philo->table);
+		if (is_meal_over(philo))
+			break ;
 		philo->ft[SLEEP](philo, philo->table);
+		if (is_meal_over(philo))
+			break ;
 		philo->ft[THINK](philo, philo->table);
 	}
+	return (NULL);
 }
 
-void	*reaper(void *table_ptr)
+static void	*reaper(void *table_ptr)
 {
 	t_table	*table;
 	bool	is_over;
