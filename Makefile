@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/27 12:25:56 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/27 12:43:47 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ CC			= cc
 RM 			= rm -f
 
 CFLAGS		= -g -Wall -Wextra -Werror -L. -lpthread -g3 -fsanitize=thread -O3 -march=native
-# CFLAGS		=  -g -L. -lpthread
 
 all:		$(NAME)
 
@@ -46,3 +45,5 @@ re:			fclean all
 norm:
 	norminette $(SRCS_LST) philo.h
 	@echo "\033[32m[ ✔ ] Norminette\033[0m"
+
+.PHONY:		all clean fclean re norm
