@@ -14,6 +14,17 @@
 
 static bool	get_two_forks(t_philo *philo);
 
+void	ft_sleep(t_philo *philo, t_table *table)
+{
+	log_message(philo, table, "is sleeping", ESC_BOLD_CYAN);
+	usleep((table->args.time_sleep * 1000));
+}
+
+void	ft_think(t_philo *philo, t_table *table)
+{
+	log_message(philo, table, "is thinking", ESC_BOLD_PURPLE);
+}
+
 void	ft_eat(t_philo *philo, t_table *table)
 {
 	if (!get_two_forks(philo))
@@ -54,17 +65,6 @@ static bool	get_fork(t_philo *philo, int fork)
 
 static bool	get_two_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		if (!get_fork(philo, RIGHT))
-			return (false);
-		if (!get_fork(philo, LEFT))
-		{
-			pthread_mutex_unlock(philo->fork[RIGHT]);
-			return (false);
-		}
-		return (true);
-	}
 	if (!get_fork(philo, LEFT))
 		return (false);
 	if (!get_fork(philo, RIGHT))
@@ -72,16 +72,5 @@ static bool	get_two_forks(t_philo *philo)
 		pthread_mutex_unlock(philo->fork[LEFT]);
 		return (false);
 	}
-	return (true);		
-}
-
-void	ft_think(t_philo *philo, t_table *table)
-{
-	log_message(philo, table, "is thinking", ESC_BOLD_PURPLE);
-}
-
-void	ft_sleep(t_philo *philo, t_table *table)
-{
-	log_message(philo, table, "is sleeping", ESC_BOLD_CYAN);
-	usleep((table->args.time_sleep * 1000));
+	return (true);
 }

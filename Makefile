@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/26 18:07:39 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/27 12:25:56 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,16 @@
 NAME	 	=	philo
 
 SRCS_LST	=	srcs/main.c srcs/init_table.c \
-				srcs/check_args.c srcs/minilibft.c srcs/actions.c \
-				srcs/init_table_utils.c srcs/log_messages.c srcs/start_dinner.c
+				srcs/check_args.c srcs/actions.c \
+				srcs/utils.c srcs/start_dinner.c
 				
 OBJS_LST	=	$(SRCS_LST:.c=.o)
 
 CC			= cc
 RM 			= rm -f
 
-# CFLAGS		= -Wall -Wextra -Werror -g -L. -lpthread -fsanitize=address
-CFLAGS		=  -g -L. -lpthread
+CFLAGS		= -g -Wall -Wextra -Werror -L. -lpthread -g3 -fsanitize=thread -O3 -march=native
+# CFLAGS		=  -g -L. -lpthread
 
 all:		$(NAME)
 
