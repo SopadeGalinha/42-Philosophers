@@ -102,7 +102,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_init(&params.mutex, NULL);
 	
 	if (initialization(&params, argc, argv))
-		return (printf(",,/,,"));
+		return (printf("feito"));
 	if (argc == 5 || argc == 6)
 		ft_print_params(&params, argc);
 
