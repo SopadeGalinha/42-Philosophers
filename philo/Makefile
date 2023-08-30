@@ -3,15 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
+#    By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/18 12:57:25 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/08/21 21:49:29 by heolivei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= philo
-SRCS 	= srcs/main.c srcs/minilibft.c srcs/initialization.c
+SRCS 	= srcs/main.c \
+		srcs/minilibft.c \
+		srcs/initialization.c
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g -L.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/18 12:40:52 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/29 13:41:02 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <stdbool.h>
+# include <sys/time.h>
+# include <pthread.h>
+
+# include <unistd.h>
 
 typedef struct s_params
 {
@@ -23,7 +28,19 @@ typedef struct s_params
 	int	n_time_to_eat;
 	int	n_time_to_sleep;
 	int	n_meals;
+
 }	t_params;
+
+typedef struct s_philo
+{
+	int				id;
+	int				time_lst_meal;
+	pthread_t		thread;
+    pthread_mutex_t	fork_left;
+	pthread_mutex_t	fork_right;
+	t_params		*table;
+}	t_philo;
+
 
 int		ft_strlen(const char *str);
 int		ft_atoi(const char *str);
