@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heolivei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 20:18:34 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/29 14:28:16 by heolivei         ###   ########.fr       */
+/*   Created: 2023/08/30 12:32:40 by heolivei          #+#    #+#             */
+/*   Updated: 2023/08/30 12:32:51 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_philo	**init_philo(t_params *params)
 		philos[i]->table = params;
 		philos[i]->time_lst_meal = get_time(philos[i]->table);
 		i++;
-		usleep(1);
 	}
 	i = 0;
 	while (i < params->n_philo)
@@ -96,17 +95,17 @@ int	main(int argc, char **argv)
 {
 	t_params	params;
 	t_philo		**philos;
-	bool		error;
 
 	params = (t_params){0};
-	error = initialization(&params, argc, argv);
-	if (error)
-		return (1);
+
+	pthread_mutex_init(&params.mutex, NULL);
+	pthread_mutex_init(&params.mutex, NULL);
+	
+	if (initialization(&params, argc, argv))
+		return (printf(",,/,,"));
 	if (argc == 5 || argc == 6)
 		ft_print_params(&params, argc);
 
 	philos = init_philo(&params);
-	printf ("\n%d\n", philos[1]->id);
-	printf ("\n%d\n", philos[2]->id);
 	return (0);
 }

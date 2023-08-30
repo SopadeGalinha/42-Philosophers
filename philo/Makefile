@@ -16,13 +16,13 @@ SRCS 	= srcs/main.c \
 		srcs/initialization.c
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g -L.
+CFLAGS	= -Wall -Wextra -Werror -g
 RM 		= rm -f
 
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -lpthread
 
 re:		fclean all
 

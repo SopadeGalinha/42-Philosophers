@@ -28,7 +28,8 @@ typedef struct s_params
 	int	n_time_to_eat;
 	int	n_time_to_sleep;
 	int	n_meals;
-
+	pthread_mutex_t	mutex;
+	pthread_mutex_t	print;
 }	t_params;
 
 typedef struct s_philo

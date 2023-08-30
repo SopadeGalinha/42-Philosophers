@@ -12,18 +12,18 @@
 
 #include "../philo.h"
 
-static void	set_params(t_params *input, int argc, char **argv)
+void	set_params(t_params *params, int argc, char **argv)
 {
 	if (argc == 5 || argc == 6)
 	{
-		input->n_philo = ft_atoi(argv[1]);
-		input->n_time_to_die = ft_atoi(argv[2]);
-		input->n_time_to_eat = ft_atoi(argv[3]);
-		input->n_time_to_sleep = ft_atoi(argv[4]);
+		params->n_philo = ft_atoi(argv[1]);
+		params->n_time_to_die = ft_atoi(argv[2]);
+		params->n_time_to_eat = ft_atoi(argv[3]);
+		params->n_time_to_sleep = ft_atoi(argv[4]);
 		if (argc == 6)
-			input->n_meals = ft_atoi(argv[5]);
+			params->n_meals = ft_atoi(argv[5]);
 		else
-			input->n_meals = -1;
+			params->n_meals = -1;
 	}
 }
 
