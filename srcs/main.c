@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:18:34 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/27 12:13:28 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/29 02:19:14 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ int	main(int ac, char **av)
 
 	table = init_table(ac, av);
 	printf("\n");
-	if (table)
-		start_dinner(table);
-	clean_table(table);
+	if (!table)
+		return (1);
+	if (!start_dinner(table))
+		return (1);
+	clean_table(&table);
 	return (0);
 }

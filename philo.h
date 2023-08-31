@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/27 12:38:53 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:24:41 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,52 @@
 # define ER3				"<time_to_eat> <time_to_sleep> "
 # define ER4				"[number_of_times_each_philosopher_must_eat]\n"
 
+// Final Messages
+# define FINAL_DEAD	"What is the meaning of life?"
+# define FINAL_FULL	"They all ate so much they can't barely think now..."
+
+//______________________________________________________________________________
+// Struct to populate with arguments passed by user
+typedef struct s_args
+{
+	int				start;
+	int				nb_philo;
+	long			time_die;
+	long			time_eat;
+	long			time_sleep;
+	int				nb_meals;
+}	t_args;
+
+// Structure to represent a single philosopher
+typedef struct s_philo
+{
+	int				id;
+	int				meal_count;
+	long			last_meal;
+	bool			is_done;
+	t_args			args;
+	bool			*is_over;
+	pthread_t		thread_id;
+	pthread_mutex_t	last_meal_lock;
+	pthread_mutex_t	is_done_lock;
+	pthread_mutex_t	*print_zone;
+	pthread_mutex_t	*fork[2];
+	pthread_mutex_t	*is_over_lock;
+	void			(*ft[3])(struct s_philo *);
+}	t_philo;
+
+// Struct to store all data to table settings
+typedef struct s_table
+{
+	pthread_mutex_t	print_zone;
+	pthread_mutex_t	is_over_lock;
+	pthread_mutex_t	*forks;
+	pthread_t		dead;
+	bool			is_over;
+	t_args			args;
+	t_philo			**philos;
+}	t_table;
+
 //______________________________________________________________________________
 
 // actions 
@@ -62,68 +108,23 @@ enum e_fork{
 
 //______________________________________________________________________________
 
-typedef struct s_table	t_table;
-typedef struct s_philo	t_philo;
+// Actions
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
 
-// Store all arguments
-typedef struct s_args
-{
-	int				nb_philo;
-	long			time_die;
-	long			time_eat;
-	long			time_sleep;
-	int				nb_meals;
-}	t_args;
-
-// Store all data to philo settings
-typedef struct s_philo
-{
-	int				id;
-	int				meal_count;
-	pthread_t		thread_id;
-	t_args			args;
-	void			(*ft[3])(struct s_philo *philo, t_table *table);
-	long			last_meal;
-	bool			*is_over;
-	bool			is_done;
-	pthread_mutex_t	*fork[2];
-	pthread_mutex_t	last_meal_lock;
-	pthread_mutex_t	is_done_lock;
-	pthread_mutex_t	*print_zone;
-	pthread_mutex_t	*is_over_lock;
-	t_table			*table;
-}	t_philo;
-
-// Store all data to table settings
-typedef struct s_table
-{
-	t_philo			**philos;
-	t_args			args;
-	struct timeval	start_time;
-	bool			is_over;
-	pthread_t		reaper;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	printzone;
-	pthread_mutex_t	is_over_lock;
-}	t_table;
-
-//______________________________________________________________________________
-
-// actions
-void	ft_eat(t_philo *philo, t_table *table);
-void	ft_think(t_philo *philo, t_table *table);
-void	ft_sleep(t_philo *philo, t_table *table);
+// Logs
+void	log_message(t_philo *philo, char *log_msg, char *color);
 
 // Utils
-int		get_time(t_table *table);
-void	clean_table(t_table *table);
-bool	is_meal_over(t_philo *philo);
-void	log_message(t_philo *philo, t_table *table, char *log_msg, char *color);
+void	*clean_table(t_table **table);
+bool	meal_over(t_philo *philo);
+int		ft_atoi(const char *str);
 
 // Init
-int		ft_atoi(const char *str);
-int		start_dinner(t_table *table);
-int		check_args(int ac, char **av);
 t_table	*init_table(int argc, char **argv);
+int		check_args(int argc, char **argv);
+bool	start_dinner(t_table *table);
+int		get_time(int start);
 
 #endif
