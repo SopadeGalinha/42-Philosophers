@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/30 15:24:41 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/08/31 18:58:20 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@
 # define ER2				"Try: ./philo <number_of_philos> <time_to_die> "
 # define ER3				"<time_to_eat> <time_to_sleep> "
 # define ER4				"[number_of_times_each_philosopher_must_eat]\n"
-
-// Final Messages
-# define FINAL_DEAD	"What is the meaning of life?"
-# define FINAL_FULL	"They all ate so much they can't barely think now..."
 
 //______________________________________________________________________________
 // Struct to populate with arguments passed by user
