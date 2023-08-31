@@ -28,18 +28,20 @@ typedef struct s_params
 	int	n_time_to_eat;
 	int	n_time_to_sleep;
 	int	n_meals;
+	pthread_mutex_t *forks; //maximo tamanho para mutex
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	print;
+	
 }	t_params;
 
 typedef struct s_philo
 {
+	t_params		*params;
 	int				id;
 	int				time_lst_meal;
+    int				id_fork_left;
+	int				id_fork_right;
 	pthread_t		thread;
-    pthread_mutex_t	fork_left;
-	pthread_mutex_t	fork_right;
-	t_params		*table;
 }	t_philo;
 
 

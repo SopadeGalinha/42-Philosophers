@@ -46,10 +46,10 @@ int	check_params(t_params *input, int argc)
 	return (0);
 }
 
-bool	initialization(t_params *input, int argc, char **argv)
+bool	initialization(t_params *params, int argc, char **argv)
 {
-	set_params(input, argc, argv);
-	if (check_params(input, argc))
-		return (true);
-	return (false);
+	set_params(params, argc, argv);
+	if (!check_params(params, argc))
+		return (false);
+	return (true);
 }
