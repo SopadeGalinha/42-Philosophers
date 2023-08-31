@@ -59,25 +59,25 @@ static bool	ft_is_all_num(char **av)
 
 int	ft_atoi(const char *str)
 {
-	int	c;
+	int	i;
 	int	s;
 	int	res;
 
-	c = 0;
+	i = 0;
 	s = 1;
 	res = 0;
-	while ((str[c] >= 9 && str[c] <= 13) || (str[c] == 32))
-		c++;
-	if (str[c] == '-' || str[c] == '+')
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (str[c] == '-')
+		if (str[i] == '-')
 			s = -1;
-		c++;
+		i++;
 	}
-	while (str[c] >= '0' && str[c] <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		res = (res * 10) + (str[c] - 48);
-		c++;
+		res = (res * 10) + (str[i] - 48);
+		i++;
 	}
 	return (res * s);
 }
