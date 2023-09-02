@@ -23,30 +23,34 @@
 
 typedef struct s_params
 {
-	int	n_philo;
-	int	n_time_to_die;
-	int	n_time_to_eat;
-	int	n_time_to_sleep;
-	int	n_meals;
-	pthread_mutex_t *forks; //maximo tamanho para mutex
+	int				n_philo;
+	int				n_time_to_die;
+	int				n_time_to_eat;
+	int				n_time_to_sleep;
+	int				n_meals;
+	long long int	start_program;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	print;
-	
 }	t_params;
 
 typedef struct s_philo
 {
 	t_params		*params;
 	int				id;
-	int				time_lst_meal;
-    int				id_fork_left;
+	unsigned int	time_lst_meal;
+	int				id_fork_left;
 	int				id_fork_right;
 	pthread_t		thread;
 }	t_philo;
 
-
 int		ft_strlen(const char *str);
 int		ft_atoi(const char *str);
+
 bool	initialization(t_params *input, int argc, char **argv);
+
+void			*rotine(void *arg);
+long long int	get_time(long long int start_time);
+t_philo			**init_philos_array(t_params *params);
 
 #endif

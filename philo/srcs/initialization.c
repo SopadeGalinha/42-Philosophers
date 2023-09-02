@@ -16,6 +16,7 @@ void	set_params(t_params *params, int argc, char **argv)
 {
 	if (argc == 5 || argc == 6)
 	{
+		params->start_program = get_time(0);
 		params->n_philo = ft_atoi(argv[1]);
 		params->n_time_to_die = ft_atoi(argv[2]);
 		params->n_time_to_eat = ft_atoi(argv[3]);

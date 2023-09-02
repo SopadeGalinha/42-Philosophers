@@ -13,7 +13,8 @@
 NAME 	= philo
 SRCS 	= srcs/main.c \
 		srcs/minilibft.c \
-		srcs/initialization.c
+		srcs/initialization.c \
+		srcs/init_philos_array.c
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g
