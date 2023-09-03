@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philos_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 13:33:33 by heolivei          #+#    #+#             */
-/*   Updated: 2023/09/02 13:33:46 by heolivei         ###   ########.fr       */
+/*   Updated: 2023/09/03 11:42:43 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,21 @@ void	print_philos(t_philo *philo, int i)
 void	*rotine(void *arg)
 {
 	t_philo	*philo;
-	int		i;
+	//int		i;
 
-	i = 0;
+	//i = 0;
 	philo = (t_philo *)arg;
 
-	//pthread_mutex_lock(&philo->params->mutex);
-		printf("%d\n", philo->id);
-	//pthread_mutex_unlock(&philo->params->mutex);
-	/*pthread_mutex_lock(&philo->params->mutex);
-		printf("filosofo %d entrou na sala.\n", philo->id + 1);
-		while (i++ < 100)
-			printf("%d",i);
-		printf("\nfilosofo %d saiu da sala.\n\n", philo->id + 1);
-	pthread_mutex_unlock(&philo->params->mutex);*/
-	
-	
+
+	pthread_mutex_lock(&philo->params->forks[philo->id_fork_right]);
+		printf("filosofo %d pegou no garfo %d\n", philo->id + 1, philo->id_fork_right + 1);
+		pthread_mutex_lock(&philo->params->forks[philo->id_fork_left]);
+			printf("filosofo %d pegou no garfo %d\n", philo->id + 1, philo->id_fork_left + 1);
+			sleep(1);
+		pthread_mutex_unlock(&philo->params->forks[philo->id_fork_left]);
+	pthread_mutex_unlock(&philo->params->forks[philo->id_fork_right]);
+
+
 	return (0);
 }
 
@@ -70,10 +69,10 @@ t_philo	*init_philo(int i, t_params *params)
 	{
 		printf("erro na cricao da thread");
 		return (0);
-	}	
-	
+	}
+
 	//print_philos(philo, i);
-	return (0);
+	return (philo);
 }
 
 void	init_forks(t_params *params)
@@ -109,8 +108,8 @@ t_philo	**init_philos_array(t_params *params)
 	while (++i < params->n_philo)
 		philos[i] = init_philo(i, params);
 	i = -1;
-	//while (++i < params->n_philo - 1)
-		//pthread_join(philos[i]->thread, NULL);
+	while (++i < params->n_philo)
+		pthread_join(philos[i]->thread, NULL);
 	pthread_mutex_destroy(&params->mutex);
 	return (philos);
 }

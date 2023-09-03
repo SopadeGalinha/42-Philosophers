@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heolivei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 12:32:40 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/30 12:32:51 by heolivei         ###   ########.fr       */
+/*   Updated: 2023/09/03 10:33:56 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 		ft_print_params(&params, argc);
 	philos = init_philos_array(&params);
-	
+	(void)philos;
 	return (0);
 }
