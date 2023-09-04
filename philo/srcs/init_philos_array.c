@@ -31,27 +31,6 @@ void	print_philos(t_philo *philo, int i)
 	printf("--------------------------------------------------\n");
 }
 
-void	*rotine(void *arg)
-{
-	t_philo	*philo;
-	//int		i;
-
-	//i = 0;
-	philo = (t_philo *)arg;
-
-
-	pthread_mutex_lock(&philo->params->forks[philo->id_fork_right]);
-		printf("filosofo %d pegou no garfo %d\n", philo->id + 1, philo->id_fork_right + 1);
-		pthread_mutex_lock(&philo->params->forks[philo->id_fork_left]);
-			printf("filosofo %d pegou no garfo %d\n", philo->id + 1, philo->id_fork_left + 1);
-			sleep(1);
-		pthread_mutex_unlock(&philo->params->forks[philo->id_fork_left]);
-	pthread_mutex_unlock(&philo->params->forks[philo->id_fork_right]);
-
-
-	return (0);
-}
-
 t_philo	*init_philo(int i, t_params *params)
 {
 	t_philo	*philo;
@@ -61,11 +40,12 @@ t_philo	*init_philo(int i, t_params *params)
 	philo->id = i;
 	philo->id_fork_right = i;
 	philo->time_lst_meal = (int)get_time(params->start_program);
+	philo->meals_count = 0;
 	if (i > 0)
 		philo->id_fork_left = i - 1;
 	else
 		philo->id_fork_left = params->n_philo - 1;
-	if(pthread_create(&philo->thread, NULL, &rotine, philo) != 0)
+	if(pthread_create(&philo->thread, NULL, &routine, philo) != 0)
 	{
 		printf("erro na cricao da thread");
 		return (0);

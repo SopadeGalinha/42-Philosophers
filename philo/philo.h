@@ -41,6 +41,7 @@ typedef struct s_philo
 	unsigned int	time_lst_meal;
 	int				id_fork_left;
 	int				id_fork_right;
+	unsigned int	meals_count;
 	pthread_t		thread;
 }	t_philo;
 
@@ -49,7 +50,7 @@ int		ft_atoi(const char *str);
 
 bool	initialization(t_params *input, int argc, char **argv);
 
-void			*rotine(void *arg);
+void			*routine(void *arg);
 long long int	get_time(long long int start_time);
 t_philo			**init_philos_array(t_params *params);
 

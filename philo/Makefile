@@ -12,12 +12,13 @@
 
 NAME 	= philo
 SRCS 	= srcs/main.c \
+		srcs/routine.c \
 		srcs/minilibft.c \
 		srcs/initialization.c \
 		srcs/init_philos_array.c
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 RM 		= rm -f
 
 all: $(NAME)
