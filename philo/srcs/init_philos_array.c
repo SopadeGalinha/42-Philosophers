@@ -36,6 +36,7 @@ t_philo	*init_philo(int i, t_params *params)
 	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
+	philo->died = 0;
 	philo->params = params;
 	philo->id = i;
 	philo->id_fork_right = i;
@@ -48,9 +49,8 @@ t_philo	*init_philo(int i, t_params *params)
 	if(pthread_create(&philo->thread, NULL, &routine, philo) != 0)
 	{
 		printf("erro na cricao da thread");
-		return (0);
+		return (NULL);
 	}
-
 	//print_philos(philo, i);
 	return (philo);
 }
@@ -74,11 +74,11 @@ void	init_forks(t_params *params)
 
 t_philo	**init_philos_array(t_params *params)
 {
-	t_philo		**philos;
+	t_philo	**philos;
 	int			i;
 
+	philos = malloc(sizeof(t_philo *) * params->n_philo);
 	i = -1;
-	philos = (t_philo **)malloc(sizeof(t_philo *) * params->n_philo);
 	if (!philos)
 	{
 		printf("Erro ao inicializar os philos\n");
@@ -88,8 +88,9 @@ t_philo	**init_philos_array(t_params *params)
 	while (++i < params->n_philo)
 		philos[i] = init_philo(i, params);
 	i = -1;
+	params->philos = philos;
 	while (++i < params->n_philo)
 		pthread_join(philos[i]->thread, NULL);
 	pthread_mutex_destroy(&params->mutex);
-	return (philos);
+	return (params->philos);
 }

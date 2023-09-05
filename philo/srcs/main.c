@@ -44,18 +44,19 @@ int	main(int argc, char **argv)
 	i = 0;
 	params = (t_params){0};
 	pthread_mutex_init(&params.mutex, NULL);
-	pthread_mutex_init(&params.mutex, NULL);
+	pthread_mutex_init(&params.print, NULL);
 	if (initialization(&params, argc, argv))
 		return (printf("error"));
 	if (argc == 5 || argc == 6)
 		ft_print_params(&params, argc);
-	philos = init_philos_array(&params);	
-	/*while (i < params.n_philo)
+	philos = init_philos_array(&params);
+	while (i < params.n_philo)
 	{
 		pthread_mutex_destroy(&params.forks[i]);
+		free(philos[i]);
 		i++;
-	}*/
+	}
 	free(params.forks);
-	(void)philos;
+	free(philos);
 	return (0);
 }

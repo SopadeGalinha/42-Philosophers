@@ -18,7 +18,7 @@ SRCS 	= srcs/main.c \
 		srcs/init_philos_array.c
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=leak
 RM 		= rm -f
 
 all: $(NAME)
