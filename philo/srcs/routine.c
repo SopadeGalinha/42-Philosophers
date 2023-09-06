@@ -23,22 +23,22 @@ void	eating(t_philo *philo)
 	//Pega no garfo da direita
 	pthread_mutex_lock(&philo->params->forks[philo->id_fork_right]);
 		
-		philo->time_lst_meal = get_time(philo->params->start_program);
+		//philo->time_lst_meal = get_time(philo->params->start_program);
 
 		pthread_mutex_lock(&philo->params->print);
-			printf("%d %d has take a fork\n", philo->time_lst_meal, philo->id + 1);
+			printf("%lld %d has take a fork\n", get_time(philo->params->start_program), philo->id + 1);
 		pthread_mutex_unlock(&philo->params->print);
 		
 
 		//pega no garfo da esquerda.
-
+		
 		pthread_mutex_lock(&philo->params->forks[philo->id_fork_left]);
-			philo->time_lst_meal = get_time(philo->params->start_program);
 			pthread_mutex_lock(&philo->params->print);
-				printf("%d %d has take a fork\n", philo->time_lst_meal, philo->id + 1);
-				printf("%d %d is eating\n", philo->time_lst_meal, philo->id + 1);
+				printf("%lld %d has take a fork\n", get_time(philo->params->start_program), philo->id + 1);
+				printf("%lld %d is eating\n", get_time(philo->params->start_program), philo->id + 1);
 			pthread_mutex_unlock(&philo->params->print);
 			usleep(philo->params->n_time_to_eat * 1000);
+			philo->time_lst_meal = get_time(philo->params->start_program);
 		pthread_mutex_unlock(&philo->params->forks[philo->id_fork_left]);
 
 	pthread_mutex_unlock(&philo->params->forks[philo->id_fork_right]);
@@ -51,30 +51,34 @@ void	thinking(t_philo *philo)
 		printf("%lld %d is thinking\n", get_time(philo->params->start_program), philo->id + 1);
 	pthread_mutex_unlock(&philo->params->print);
 }
-int	check_philo_died(t_philo *philo)
+int	check_any_dead(t_params *params)
 {
 	int i;
 	int	since_last_meal;
 	
 	i = 0;
-	since_last_meal = 0;
-	since_last_meal = (get_time(philo->params->start_program) - philo->time_lst_meal);
 	
+	/*
 	if (since_last_meal >= philo->params->n_time_to_die)
 	{
 		printf("\n%d %d morreu\n", since_last_meal, philo->id + 1);
 		return (1);
 	}
-	/*while (i < philo->params->n_philo)
+	*/
+	while (i < params->n_philo)
 	{
-		if (since_last_meal >= philo->params->n_time_to_die)
+		//params->philos[i]->time_lst_meal = get_time(params->start_program);
+		since_last_meal = get_time(params->start_program) - params->philos[i]->time_lst_meal;
+		if (since_last_meal >= params->n_time_to_die)
 		{	
-			printf("%d %d died\n\n", philo->time_lst_meal, philo->params->philos[i]->id + 1);
-			philo->params->philos[i]->died = 1;
+			printf("%lld %d died\n\n", get_time(params->start_program), params->philos[i]->id + 1);
+			pthread_mutex_lock(&params->finish_lock);
+			params->finish = 1;
+			pthread_mutex_unlock(&params->finish_lock);
 			return (1);
 		}
 		i++;
-	}*/
+	}
 	return (0);
 }
 void	*routine(void *arg)
@@ -94,16 +98,17 @@ void	*routine(void *arg)
 		return (0);
 	}
 
-	while(1)
+	while(philo->params->finish == 0)
 	{
 		
 		if(philo->id % 2 != 0)
-		usleep(90);
-		if(check_philo_died(philo))
-			break;
-		eating(philo);
-		sleeping(philo);
-		thinking(philo);
+		usleep(200);
+		if(philo->params->finish == 0)
+			eating(philo);
+		if(philo->params->finish == 0)
+			sleeping(philo);
+		if(philo->params->finish == 0)
+			thinking(philo);
 	}
 	return (0);
 }

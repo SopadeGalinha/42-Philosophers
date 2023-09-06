@@ -28,10 +28,12 @@ typedef struct s_params
 	int				n_time_to_eat;
 	int				n_time_to_sleep;
 	int				n_meals;
+	int				finish;
 	long long int	start_program;
 	struct s_philo	**philos;
+	pthread_t		thread_monitoring;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	finish_lock;
 	pthread_mutex_t	print;
 }	t_params;
 
@@ -44,6 +46,7 @@ typedef struct s_philo
 	int				died;
 	unsigned int	time_lst_meal;
 	unsigned int	meals_count;
+	pthread_mutex_t	last_meal_lock;
 	pthread_t		thread;
 }	t_philo;
 
@@ -53,7 +56,7 @@ int		ft_atoi(const char *str);
 bool	initialization(t_params *input, int argc, char **argv);
 
 void			*routine(void *arg);
-int	check_philo_died(t_philo *philo);
+int				check_any_dead(t_params *params);
 long long int	get_time(long long int start_time);
 t_philo			**init_philos_array(t_params *params);
 

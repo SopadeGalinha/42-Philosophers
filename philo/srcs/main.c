@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	params = (t_params){0};
-	pthread_mutex_init(&params.mutex, NULL);
+	pthread_mutex_init(&params.finish_lock, NULL);
 	pthread_mutex_init(&params.print, NULL);
 	if (initialization(&params, argc, argv))
 		return (printf("error"));
