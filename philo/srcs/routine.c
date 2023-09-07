@@ -11,7 +11,8 @@ void	sleeping(t_philo *philo)
 	{
 	}*/
 		pthread_mutex_lock(&philo->params->print);
-			printf("%lld %d is sleeping\n", get_time(philo->params->start_program), philo->id + 1);
+			if (philo->params->finish == 0)
+				printf("%lld %d is sleeping\n", get_time(philo->params->start_program), philo->id + 1);
 		pthread_mutex_unlock(&philo->params->print);
 		usleep(philo->params->n_time_to_sleep * 1000);
 	
@@ -26,7 +27,8 @@ void	eating(t_philo *philo)
 		//philo->time_lst_meal = get_time(philo->params->start_program);
 
 		pthread_mutex_lock(&philo->params->print);
-			printf("%lld %d has take a fork\n", get_time(philo->params->start_program), philo->id + 1);
+			if (philo->params->finish == 0)
+				printf("%lld %d has taken a fork\n", get_time(philo->params->start_program), philo->id + 1);
 		pthread_mutex_unlock(&philo->params->print);
 		
 
@@ -34,11 +36,13 @@ void	eating(t_philo *philo)
 		
 		pthread_mutex_lock(&philo->params->forks[philo->id_fork_left]);
 			pthread_mutex_lock(&philo->params->print);
-				printf("%lld %d has take a fork\n", get_time(philo->params->start_program), philo->id + 1);
+			if (philo->params->finish == 0)
+				printf("%lld %d has taken a fork\n", get_time(philo->params->start_program), philo->id + 1);
+			if (philo->params->finish == 0)
 				printf("%lld %d is eating\n", get_time(philo->params->start_program), philo->id + 1);
 			pthread_mutex_unlock(&philo->params->print);
-			usleep(philo->params->n_time_to_eat * 1000);
 			philo->time_lst_meal = get_time(philo->params->start_program);
+			usleep(philo->params->n_time_to_eat * 1000);
 		pthread_mutex_unlock(&philo->params->forks[philo->id_fork_left]);
 
 	pthread_mutex_unlock(&philo->params->forks[philo->id_fork_right]);
@@ -48,7 +52,8 @@ void	eating(t_philo *philo)
 void	thinking(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->params->print);
-		printf("%lld %d is thinking\n", get_time(philo->params->start_program), philo->id + 1);
+		if (philo->params->finish == 0)
+			printf("%lld %d is thinking\n", get_time(philo->params->start_program), philo->id + 1);
 	pthread_mutex_unlock(&philo->params->print);
 }
 int	check_any_dead(t_params *params)
@@ -71,6 +76,8 @@ int	check_any_dead(t_params *params)
 		since_last_meal = get_time(params->start_program) - params->philos[i]->time_lst_meal;
 		if (since_last_meal >= params->n_time_to_die)
 		{	
+			if (params->n_philo == 1)
+				return(1);
 			printf("%lld %d died\n\n", get_time(params->start_program), params->philos[i]->id + 1);
 			pthread_mutex_lock(&params->finish_lock);
 			params->finish = 1;
@@ -91,10 +98,14 @@ void	*routine(void *arg)
 	
 	if(philo->params->n_philo == 1)
 	{
+		
 		pthread_mutex_lock(&philo->params->print);
-			printf("%d %d has take a fork\n", philo->time_lst_meal, philo->id + 1);
+			printf("%d %d has taken a fork\n", philo->time_lst_meal, philo->id + 1);
 		pthread_mutex_unlock(&philo->params->print);
 		printf("%lld %d died\n", get_time(philo->params->start_program), philo->id + 1);
+		pthread_mutex_lock(&philo->params->finish_lock);
+			philo->params->finish = 1;
+		pthread_mutex_unlock(&philo->params->finish_lock);
 		return (0);
 	}
 

@@ -36,7 +36,6 @@ t_philo	*init_philo(int i, t_params *params)
 	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
-	philo->died = 0;
 	philo->params = params;
 	philo->id = i;
 	philo->id_fork_right = i;
@@ -86,7 +85,7 @@ void	*monitoring(void *arg)
 		return (NULL);
 	while (params->finish == 0)
 	{
-		usleep(1000);
+		usleep(100);
 		if (check_any_dead(params))
 			return (NULL);
 	}
@@ -111,7 +110,7 @@ t_philo	**init_philos_array(t_params *params)
 		return (NULL);
 	while (++i < params->n_philo)
 		pthread_join(philos[i]->thread, NULL);
-	pthread_join(philos[i]->thread, NULL);
+	pthread_join(params->thread_monitoring, NULL);
 	pthread_mutex_destroy(&params->finish_lock);
 	pthread_mutex_destroy(&params->print);
 	return (params->philos);

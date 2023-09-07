@@ -43,7 +43,6 @@ typedef struct s_philo
 	int				id;
 	int				id_fork_left;
 	int				id_fork_right;
-	int				died;
 	unsigned int	time_lst_meal;
 	unsigned int	meals_count;
 	pthread_mutex_t	last_meal_lock;
