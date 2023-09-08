@@ -6,7 +6,7 @@
 /*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 13:33:33 by heolivei          #+#    #+#             */
-/*   Updated: 2023/09/03 11:42:43 by heolivei         ###   ########.fr       */
+/*   Updated: 2023/09/08 21:50:14 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,30 @@ void	init_forks(t_params *params)
 	}
 }
 
+int	check_n_meals(t_params *params)
+{
+	int i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (i < params->n_philo)
+	{
+		if(params->philos[i]->meals_count == params->n_meals)
+			count++;
+		i++;
+	}
+	if (count == params->n_philo)
+	{
+		printf("\nTodos os %d filosofos terminaram de comer\n", params->n_philo);
+		pthread_mutex_lock(&params->finish_lock);
+			params->finish = 1;
+		pthread_mutex_unlock(&params->finish_lock);
+		return (1);
+	}
+	return (0);
+}
+
 void	*monitoring(void *arg)
 {
 	t_params	*params;
@@ -85,7 +109,9 @@ void	*monitoring(void *arg)
 		return (NULL);
 	while (params->finish == 0)
 	{
-		usleep(100);
+		usleep(9000);
+		if (check_n_meals(params))
+			return (NULL);
 		if (check_any_dead(params))
 			return (NULL);
 	}

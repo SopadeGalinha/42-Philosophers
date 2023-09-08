@@ -6,7 +6,7 @@
 /*   By: heolivei <heolivei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/29 13:41:02 by heolivei         ###   ########.fr       */
+/*   Updated: 2023/09/08 21:47:33 by heolivei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 	int				id_fork_left;
 	int				id_fork_right;
 	unsigned int	time_lst_meal;
-	unsigned int	meals_count;
+	int				meals_count;
 	pthread_mutex_t	last_meal_lock;
 	pthread_t		thread;
 }	t_philo;
