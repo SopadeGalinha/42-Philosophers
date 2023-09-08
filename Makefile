@@ -6,7 +6,7 @@
 #    By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/18 11:25:43 by jhogonca          #+#    #+#              #
-#    Updated: 2023/08/30 00:20:06 by jhogonca         ###   ########.fr        #
+#    Updated: 2023/09/08 23:34:40 by jhogonca         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ OBJS	=	$(SRCS:.c=.o)
 
 RM 		= rm -f
 
-CF		= -g -Wall -Wextra -Werror -L. 
-CTH		= -lpthread -g3 -fsanitize=thread -O3 -march=native
+CF		= -g -Wall -Wextra -Werror -L . 
+# CTH		= -lpthread -g3 -fsanitize=thread -O3 -march=native
 CFLAGS	= $(CF) $(CTH)
+
 
 $(NAME):	$(OBJS)
 			@echo "\033[1;36m[ ✔ ] creating $(NAME)...\033[0m"

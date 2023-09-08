@@ -6,7 +6,7 @@
 /*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 20:24:43 by heolivei          #+#    #+#             */
-/*   Updated: 2023/08/31 18:58:20 by jhogonca         ###   ########.fr       */
+/*   Updated: 2023/09/08 23:32:51 by jhogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 
 // Logs
-void	log_message(t_philo *philo, char *log_msg, char *color);
 
 // Utils
+void	log_message(t_philo *philo, char *log_msg, char *color);
 void	*clean_table(t_table **table);
 bool	meal_over(t_philo *philo);
 int		ft_atoi(const char *str);
