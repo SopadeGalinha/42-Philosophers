@@ -34,6 +34,7 @@ typedef struct s_params
 	pthread_t		thread_monitoring;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	finish_lock;
+	pthread_mutex_t	sleep_lock;
 	pthread_mutex_t	print;
 }	t_params;
 
@@ -45,7 +46,8 @@ typedef struct s_philo
 	int				id_fork_right;
 	unsigned int	time_lst_meal;
 	int				meals_count;
-	pthread_mutex_t	last_meal_lock;
+	pthread_mutex_t	meal_count_lock;
+	pthread_mutex_t	lst_meal_lock;
 	pthread_t		thread;
 }	t_philo;
 

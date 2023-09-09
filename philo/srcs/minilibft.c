@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minilibft.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhogonca <jhogonca@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/18 11:27:55 by jhogonca          #+#    #+#             */
-/*   Updated: 2023/08/18 11:27:55 by jhogonca         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../philo.h"
 
@@ -35,15 +24,8 @@ int	ft_atoi(const char *str)
 		res = (res * 10) + (str[c] - 48);
 		c++;
 	}
+	while (str[c])
+		if (str[c] < '0' || str[c++] > '9')
+			return (-1);
 	return (res * s);
-}
-
-int	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = -1;
-	while (str[++len])
-		;
-	return (len);
 }

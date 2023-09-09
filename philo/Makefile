@@ -18,18 +18,19 @@ SRCS 	= srcs/main.c \
 		srcs/init_philos_array.c
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g #-fsanitize=leak
+OBJS	=	$(SRCS:.c=.o)
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=thread
 RM 		= rm -f
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -lpthread
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread
 
 re:		fclean all
 
 clean:
-	$(RM)
+	$(RM) $(OBJS)
 
 fclean:	clean
 	$(RM) $(NAME)

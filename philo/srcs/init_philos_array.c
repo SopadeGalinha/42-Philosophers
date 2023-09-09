@@ -12,24 +12,7 @@
 
 #include "../philo.h"
 
-void	print_philos(t_philo *philo, int i)
-{
-	printf("filosofo->id: %d\n", (philo->id));
-	printf("filosofo->time_lst_meal: %d\n", (philo->time_lst_meal));
-	printf("filosofo->fork: %p\n", (void *)(&philo->params->forks[i]));
-	printf("filosofo->id_fork_left: %d\n", (philo->id_fork_left));
-	printf("filosofo->id_fork_right: %d\n", (philo->id_fork_right));
-	printf("filosofo->thread: %ld\n", (philo->thread));
-	printf("\n");
-	printf("filosofo->params->time_to_die: %dms\n",
-		(philo->params->n_time_to_die));
-	printf("filosofo->params->time_to_eat: %dms\n",
-		(philo->params->n_time_to_eat));
-	printf("filosofo->params->time_to_sleep: %dms\n",
-		(philo->params->n_time_to_sleep));
-	printf("filosofo->params->start_progam: %lld\n", philo->params->start_program);
-	printf("--------------------------------------------------\n");
-}
+
 
 t_philo	*init_philo(int i, t_params *params)
 {
@@ -41,7 +24,8 @@ t_philo	*init_philo(int i, t_params *params)
 	philo->id_fork_right = i;
 	philo->time_lst_meal = (int)get_time(params->start_program);
 	philo->meals_count = 0;
-	pthread_mutex_init(&philo->last_meal_lock, NULL);
+	pthread_mutex_init(&philo->meal_count_lock, NULL);
+	pthread_mutex_init(&philo->lst_meal_lock, NULL);
 	if (i > 0)
 		philo->id_fork_left = i - 1;
 	else
@@ -81,13 +65,15 @@ int	check_n_meals(t_params *params)
 	count = 0;
 	while (i < params->n_philo)
 	{
-		if(params->philos[i]->meals_count == params->n_meals)
-			count++;
+		pthread_mutex_lock(&params->philos[i]->meal_count_lock);
+			if(params->philos[i]->meals_count >= params->n_meals)
+				count++;
+		pthread_mutex_unlock(&params->philos[i]->meal_count_lock);
 		i++;
 	}
 	if (count == params->n_philo)
 	{
-		printf("\nTodos os %d filosofos terminaram de comer\n", params->n_philo);
+		printf("\nTodos os %d filosofos comeram %d vezes\n", params->n_philo, params->n_meals);
 		pthread_mutex_lock(&params->finish_lock);
 			params->finish = 1;
 		pthread_mutex_unlock(&params->finish_lock);
@@ -105,13 +91,17 @@ void	*monitoring(void *arg)
 	pthread_mutex_lock(&params->finish_lock);
 	finish = params->finish;
 	pthread_mutex_unlock(&params->finish_lock);
+	
 	if (finish)
 		return (NULL);
-	while (params->finish == 0)
+	while (finish == 0)
 	{
-		usleep(9000);
-		if (check_n_meals(params))
-			return (NULL);
+		usleep(800);
+		if(params->n_meals != -1)
+		{
+			if (check_n_meals(params))
+				return (NULL);
+		}
 		if (check_any_dead(params))
 			return (NULL);
 	}
@@ -139,5 +129,6 @@ t_philo	**init_philos_array(t_params *params)
 	pthread_join(params->thread_monitoring, NULL);
 	pthread_mutex_destroy(&params->finish_lock);
 	pthread_mutex_destroy(&params->print);
+	pthread_mutex_destroy(&params->sleep_lock);
 	return (params->philos);
 }
