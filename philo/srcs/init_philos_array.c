@@ -12,8 +12,6 @@
 
 #include "../philo.h"
 
-
-
 t_philo	*init_philo(int i, t_params *params)
 {
 	t_philo	*philo;
@@ -30,12 +28,11 @@ t_philo	*init_philo(int i, t_params *params)
 		philo->id_fork_left = i - 1;
 	else
 		philo->id_fork_left = params->n_philo - 1;
-	if(pthread_create(&philo->thread, NULL, &routine, philo) != 0)
+	if (pthread_create(&philo->thread, NULL, &routine, philo) != 0)
 	{
 		printf("erro na cricao da thread");
 		return (NULL);
 	}
-	//print_philos(philo, i);
 	return (philo);
 }
 
@@ -58,7 +55,7 @@ void	init_forks(t_params *params)
 
 int	check_n_meals(t_params *params)
 {
-	int i;
+	int	i;
 	int	count;
 
 	i = 0;
@@ -66,16 +63,17 @@ int	check_n_meals(t_params *params)
 	while (i < params->n_philo)
 	{
 		pthread_mutex_lock(&params->philos[i]->meal_count_lock);
-			if(params->philos[i]->meals_count >= params->n_meals)
-				count++;
+		if (params->philos[i]->meals_count >= params->n_meals)
+			count++;
 		pthread_mutex_unlock(&params->philos[i]->meal_count_lock);
 		i++;
 	}
 	if (count == params->n_philo)
 	{
-		printf("\nTodos os %d filosofos comeram %d vezes\n", params->n_philo, params->n_meals);
+		printf("\nAll the %d philosophers ate %d times\n", 
+			params->n_philo, params->n_meals);
 		pthread_mutex_lock(&params->finish_lock);
-			params->finish = 1;
+		params->finish = 1;
 		pthread_mutex_unlock(&params->finish_lock);
 		return (1);
 	}
@@ -91,13 +89,12 @@ void	*monitoring(void *arg)
 	pthread_mutex_lock(&params->finish_lock);
 	finish = params->finish;
 	pthread_mutex_unlock(&params->finish_lock);
-	
 	if (finish)
 		return (NULL);
 	while (finish == 0)
 	{
-		usleep(800);
-		if(params->n_meals != -1)
+		usleep(1000);
+		if (params->n_meals != -1)
 		{
 			if (check_n_meals(params))
 				return (NULL);
@@ -111,7 +108,7 @@ void	*monitoring(void *arg)
 t_philo	**init_philos_array(t_params *params)
 {
 	t_philo	**philos;
-	int			i;
+	int		i;
 
 	philos = malloc(sizeof(t_philo *) * params->n_philo);
 	i = -1;
@@ -122,7 +119,8 @@ t_philo	**init_philos_array(t_params *params)
 		philos[i] = init_philo(i, params);
 	i = -1;
 	params->philos = philos;
-	if(pthread_create(&params->thread_monitoring, NULL, &monitoring, params) != 0)
+	if (pthread_create(&params->thread_monitoring, NULL,
+			&monitoring, params) != 0)
 		return (NULL);
 	while (++i < params->n_philo)
 		pthread_join(philos[i]->thread, NULL);

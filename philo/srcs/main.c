@@ -12,17 +12,15 @@
 
 #include "../philo.h"
 
-long long int	get_time(long long int start_time)
+__uint64_t	get_time(__uint64_t start_time)
 {
 	struct timeval	time;
-	long long int	current_time;
+	__uint64_t	current_time;
 
 	gettimeofday(&time, NULL);
 	current_time = (time.tv_sec * 1000) + (time.tv_usec / 1000) - start_time;
 	return (current_time);
 }
-
-
 
 int	main(int argc, char **argv)
 {

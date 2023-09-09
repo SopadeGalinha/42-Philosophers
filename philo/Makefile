@@ -13,13 +13,15 @@
 NAME 	= philo
 SRCS 	= srcs/main.c \
 		srcs/routine.c \
-		srcs/minilibft.c \
+		srcs/utils.c \
+		srcs/get_left_fork.c \
+		srcs/get_right_fork.c \
 		srcs/initialization.c \
-		srcs/init_philos_array.c
+		srcs/init_philos_array.c \
 
 CC		= cc
 OBJS	=	$(SRCS:.c=.o)
-CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS	= -Wall -Wextra -Werror -g #-fsanitize=thread
 RM 		= rm -f
 
 all: $(NAME)

@@ -51,14 +51,14 @@ typedef struct s_philo
 	pthread_t		thread;
 }	t_philo;
 
-int		ft_strlen(const char *str);
-int		ft_atoi(const char *str);
-
-bool	initialization(t_params *input, int argc, char **argv);
-
+int				ft_atoi(const char *str);
+bool			initialization(t_params *input, int argc, char **argv);
 void			*routine(void *arg);
 int				check_any_dead(t_params *params);
-long long int	get_time(long long int start_time);
+__uint64_t		get_time(__uint64_t start_time);
 t_philo			**init_philos_array(t_params *params);
+
+int			get_right_fork(t_philo *philo);
+int			get_left_fork(t_philo *philo);
 
 #endif
