@@ -25,8 +25,8 @@ void	ft_eat(t_philo *philo)
 	log_message(philo, "is eating", ESC_BOLD_GREEN);
 	philo->meal_count++;
 	usleep(philo->args.time_eat * 1000);
-	pthread_mutex_unlock(philo->fork[RIGHT]);
 	pthread_mutex_unlock(philo->fork[LEFT]);
+	pthread_mutex_unlock(philo->fork[RIGHT]);
 	if (philo->meal_count == philo->args.nb_meals)
 	{		
 		log_message(philo, "has finished eating", ESC_BOLD_WHITE);

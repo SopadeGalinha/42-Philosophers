@@ -103,7 +103,7 @@ static void	*checkdeath(void *table_ptr)
 	{
 		if (any_dead(table))
 			return (NULL);
-		usleep(table->args.time_die / 2 * 1000);
+		usleep(table->args.time_die / 2 * 500);
 	}
 	return (NULL);
 }
