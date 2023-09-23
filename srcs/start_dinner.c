@@ -68,7 +68,7 @@ static void	*dinning(void *philo_ptr)
 
 	philo = (t_philo *)philo_ptr;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(500);
 	if (philo->args.nb_philo == 1)
 	{
 		pthread_mutex_lock(philo->fork[RIGHT]);
@@ -103,7 +103,7 @@ static void	*checkdeath(void *table_ptr)
 	{
 		if (any_dead(table))
 			return (NULL);
-		usleep(table->args.time_die / 2 * 500);
+		usleep(table->args.time_die / 2 * 1000);
 	}
 	return (NULL);
 }
